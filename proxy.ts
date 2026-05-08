@@ -8,7 +8,7 @@ const isPublicRoute = createRouteMatcher([
   "/home",
 ]);
 
-const isPublicApiRoutes = createRouteMatcher(["/api/webhooks(.*)"]);
+const isPublicApiRoutes = createRouteMatcher(["/api/video"]);
 
 export default clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
