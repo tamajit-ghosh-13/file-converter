@@ -1,27 +1,49 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// This is the Prisma schema file, which defines the database structure and provides type safety for the application.
+// Documentation: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
+// The generator block tells Prisma how to create the Prisma Client.
 generator client {
   provider = "prisma-client"
+  // The output path is customized to store the generated client in the app/generated folder.
   output   = "../app/generated/prisma"
 }
 
+// The datasource block configures the connection to the database.
 datasource db {
   provider = "postgresql"
 }
 
-// File storage
+/**
+ * Video Model
+ * Represents a video uploaded by a user.
+ * It stores metadata about the video, including its size and duration,
+ * and a publicId which is typically used to reference the file in a cloud storage provider (e.g., Cloudinary).
+ */
 model Video {
+    // Unique identifier for each video, generated using CUID for collision resistance.
     id             String   @id @default(cuid())
+
+    // The display title of the video.
     title          String
+
+    // An optional description providing more context about the video content.
     description    String?
+
+    // The public identifier used to retrieve the video from the storage provider.
     publicId       String
+
+    // The size of the video file before compression, stored as a string.
     originalSize   String
+
+    // The size of the video file after compression, stored as a string.
     compressedSize String
+
+    // The length of the video in seconds.
     duration       Float
+
+    // Timestamp of when the video record was first created.
     createdAt      DateTime @default(now())
+
+    // Timestamp that automatically updates whenever the record is modified.
     updatedAt      DateTime @updatedAt
 }
-
